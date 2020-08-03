@@ -30,6 +30,7 @@ import timber.log.Timber
 
 const val KEY_REVENUE = "key_revenue"
 const val KEY_DESSERTS_SOLD = "key_desserts_sold"
+const val KEY_DESSERT_TIMER_SECONDS = "key_dessert_timer_seconds"
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
 
@@ -84,6 +85,7 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         if (savedInstanceState != null) {
             revenue = savedInstanceState.getInt(KEY_REVENUE)
             dessertsSold = savedInstanceState.getInt(KEY_DESSERTS_SOLD)
+            dessertTimer.secondsCount = savedInstanceState.getInt(KEY_DESSERT_TIMER_SECONDS)
         }
 
         // Set the TextViews to the right values
@@ -163,8 +165,15 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        Timber.i("onSaveInstanceState called")
         outState.putInt(KEY_REVENUE, revenue)
         outState.putInt(KEY_DESSERTS_SOLD, dessertsSold)
+        outState.putInt(KEY_DESSERT_TIMER_SECONDS, dessertTimer.secondsCount)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Timber.i("onRestoreInstanceState called")
     }
 
     override fun onStart() {
